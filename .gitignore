@@ -3,3 +3,6 @@
 
 # ignore ALL files in ANY directory named temp
 temp/
+
+# ignore files
+today-i-learned/data.js
