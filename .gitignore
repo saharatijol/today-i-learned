@@ -6,3 +6,4 @@ temp/
 
 # ignore files
 data.js
+config.js
