@@ -2,19 +2,6 @@ import { useEffect, useState } from "react";
 import supabase from "./supabase.js";
 import "./style.css";
 
-function Counter() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div>
-      <span style={{ fontSize: "40px" }}>{count}</span>
-      <button className="btn btn-large" onClick={() => setCount((c) => c + 1)}>
-        +1
-      </button>
-    </div>
-  );
-}
-
 function App() {
   const [showForm, setShowForm] = useState(false);
   const [facts, setFacts] = useState([]);
@@ -116,7 +103,7 @@ function isValidUrl(string) {
 
 function NewFactForm({ setFacts, setShowForm }) {
   const [text, setText] = useState("");
-  const [source, setSource] = useState("http://example.com");
+  const [source, setSource] = useState("");
   const [category, setCategory] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const textLength = text.length;
@@ -232,6 +219,8 @@ function FactList({ facts, setFacts }) {
 
 function Fact({ factObj, setFacts }) {
   const [isUpdating, setIsUpdating] = useState(false);
+  const isDisputed =
+    factObj.votes_interesting + factObj.votes_mindblown < factObj.votes_false;
 
   async function handleVote(columnName) {
     setIsUpdating(true);
@@ -253,6 +242,7 @@ function Fact({ factObj, setFacts }) {
   return (
     <li className="fact">
       <p>
+        {isDisputed ? <span className="disputed">[⛔ DISPUTED] </span> : null}
         {factObj.text}
         <a className="source" href={factObj.source} target="_blank">
           (Source)
